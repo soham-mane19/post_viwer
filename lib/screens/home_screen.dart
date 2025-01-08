@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:post_viewer/models/postmodel.dart';
 import 'package:post_viewer/services/api_service.dart';
 import 'package:post_viewer/widget/postcard.dart';
 
@@ -10,11 +11,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
- 
+ late Future<List<Post>> futurepost;
   @override
   void initState() {
     // TODO: implement initState
-    ApiService().fetchpost();
+  futurepost =  ApiService().fetchPosts();
   }
   @override
   Widget build(BuildContext context) {
@@ -23,23 +24,24 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("All posts"),
         
       ),
-      body: StreamBuilder<Object>(
-        stream: null,
+      body: FutureBuilder<List<Post>>(
+        future: futurepost,
       
         builder: (context, snapshot) {
           if(snapshot.hasError){
           return Center(child: Text('Error: ${snapshot.error}'));
           }
           else if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return  CircularProgressIndicator();
           }
          
 else{
+final posts = snapshot.data!;
   
           return ListView.builder(
             itemCount: 4,
             itemBuilder: (context, index) {
-            return PostCards();
+            return PostCard(post: posts[index],);
           },);
         }
         }
