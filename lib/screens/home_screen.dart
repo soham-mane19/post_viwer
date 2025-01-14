@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return Center(child: Text('Error: ${snapshot.error}'));
           }
           else if (snapshot.connectionState == ConnectionState.waiting) {
-            return  CircularProgressIndicator();
+            return  Center(child: CircularProgressIndicator());
           }
          
 else{

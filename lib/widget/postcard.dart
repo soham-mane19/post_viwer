@@ -13,7 +13,7 @@ class PostCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
         contentPadding: EdgeInsets.all(10),
-        leading: Icon(Icons.image),
+        leading: Image.network(post.imageUrl.first),
         title: Text(post.title),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
